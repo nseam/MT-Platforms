@@ -9,7 +9,7 @@ install:
 - dir "C:\"
 - dir "C:\Apps"
 - dir "C:\Apps\AHK"
-- "C:\\Apps\\AHK\\AutoHotkey.exe" /ErrorStdOut "scripts\\ahk\\install_mt4.ahk"
+- C:\Apps\AHK\AutoHotkey.exe /ErrorStdOut "scripts\\ahk\\install_mt4.ahk"
 - scoop install ruby python
 - ps: scoop install shellcheck
 before_test:
