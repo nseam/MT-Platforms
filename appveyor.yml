@@ -8,7 +8,9 @@ install:
 - AutoHotkey_1.1.30.03_setup.exe /S
 - dir
 - C:/"Program Files"/AutoHotkey/AutoHotkey.exe /ErrorStdOut "scripts/ahk/install_mt4.ahk"
-- scoop install ruby python
+- dir "C:\Program Files"
+- dir "C:\Program Files\MetaTrader"
+- ps: scoop install ruby python
 - ps: scoop install shellcheck
 before_test:
 - git submodule update --init
