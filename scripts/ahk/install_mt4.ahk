@@ -4,7 +4,8 @@ Run, "mt4setup.exe"
 SetTitleMatchMode, RegEx
 WinWait, 4 Setup
 Send, !n
-Sleep, 20000
+Sleep, 2000
+Send, {Space}
 Send, {Tab}{Enter}
 Process, Wait, terminal.exe, 5
 WinWaitActive, ahk_class MetaQuotes::MetaTrader::4.00
