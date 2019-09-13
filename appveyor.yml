@@ -9,16 +9,16 @@ install:
 - set "REPODIR=%cd%"
 - type scripts\ahk\install_mt4.ahk
 - C:\Progra~1\AutoHotkey\AutoHotkey.exe /ErrorStdOut scripts\ahk\install_mt4.ahk 2>&1
-- dir "C:\Program Files"
-- dir "C:\Program Files\MetaTrader"
-- ps: scoop install ruby python
-- ps: scoop install shellcheck
+#- dir "C:\Program Files"
+#- dir "C:\Program Files\MetaTrader"
+#- ps: scoop install ruby python
+#- ps: scoop install shellcheck
 before_test:
-- git submodule update --init
-- shellcheck --version
+#- git submodule update --init
+#- shellcheck --version
 #- echo ^#define %MODE% >> src/include/EA31337/ea-mode.mqh
 test_script:
-- ps: Get-ChildItem -File scripts | Foreach {shellcheck $_.fullname}
-- dir "C:\Program Files\MetaTrader"
+#- ps: Get-ChildItem -File scripts | Foreach {shellcheck $_.fullname}
+#- dir "C:\Program Files\MetaTrader"
 build: off
 platform: x86
