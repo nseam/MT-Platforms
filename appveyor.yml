@@ -8,7 +8,7 @@ install:
 - AutoHotkey_1.1.30.03_setup.exe /S
 - set "REPODIR=%cd%"
 - type scripts\ahk\install_mt4.ahk
-- C:\Progra~1\AutoHotkey\AutoHotkey.exe /ErrorStdOut scripts\ahk\install_mt4.ahk 2>&1
+- C:\Progra~1\AutoHotkey\AutoHotkey.exe /ErrorStdOut scripts\ahk\install_mt4.ahk 2>&1 | more
 #- dir "C:\Program Files"
 #- dir "C:\Program Files\MetaTrader"
 #- ps: scoop install ruby python
