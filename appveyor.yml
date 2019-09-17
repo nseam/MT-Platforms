@@ -2,6 +2,7 @@ environment:
   EAFILE: src/EA31337.mq4
 init:
 - ps: iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
+- ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 install:
 - appveyor DownloadFile https://github.com/Lexikos/AutoHotkey_L/releases/download/v1.1.30.03/AutoHotkey_1.1.30.03_setup.exe
 - appveyor DownloadFile https://web.archive.org/web/20160112133258if_/https://download.mql5.com/cdn/web/metaquotes.software.corp/mt4/mt4setup.exe?utm_campaign=www.metatrader4.com
@@ -9,6 +10,7 @@ install:
 - set "REPODIR=%cd%"
 - ps: type scripts\ahk\install_mt4.ahk
 - ps: C:\Progra~1\AutoHotkey\AutoHotkey.exe /ErrorStdOut scripts\ahk\install_mt4.ahk 2>&1 | more
+- ping 127.0.0.1 -n 60 > nul
 - dir "C:\Program Files"
 - dir "C:\Program Files\MetaTrader"
 #- ps: scoop install ruby python
