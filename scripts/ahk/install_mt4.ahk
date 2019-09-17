@@ -12,7 +12,7 @@ Send, {Space}
 Send, {Tab}{Enter}
 Sleep, 5000
 WinActivate, 4 Setup
-stdout.WriteLine("%A_Now%: Awaiting installer to finish installation...");
+stdout.WriteLine("%A_Now%: Awaiting installer to finish installation...")
 Process, Wait, terminal.exe, 5
 WinWaitActive, ahk_class MetaQuotes::MetaTrader::4.00
 stdout.WriteLine("%A_Now%: Closing installer...")
