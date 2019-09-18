@@ -15,7 +15,7 @@ install:
 - ps: type scripts\ahk\install_mt4.ahk
 - ps: C:\Progra~1\AutoHotkey\AutoHotkey.exe /ErrorStdOut scripts\ahk\install_mt4.ahk 2>&1 | more
 - dir "C:\Program Files (x86)"
-- ps: set MT_VERSION (Get-Item 'C\Program Files (x86)\MetaTrader 4\terminal.exe').VersionInfo.FileVersion
+- ps: set MT_VERSION (Get-Item 'C:\Program Files (x86)\MetaTrader 4\terminal.exe').VersionInfo.FileVersion
 - ps: echo "MetaTrader terminal version is $MT_VERSION"
 - Reg export "HKCU\Software\MetaQuotes Software\MetaTrader 4" "C:\Program Files (x86)\MetaTrader 4\registry.reg"
 - 7z a metatrader4.zip "C:\Program Files (x86)\MetaTrader 4"
