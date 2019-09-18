@@ -6,8 +6,8 @@ init:
 install:
 - appveyor DownloadFile https://github.com/Lexikos/AutoHotkey_L/releases/download/v1.1.30.03/AutoHotkey_1.1.30.03_setup.exe
 - ps: wget "https://web.archive.org/web/20160112133258if_/https://download.mql5.com/cdn/web/metaquotes.software.corp/mt4/mt4setup.exe?utm_campaign=www.metatrader4.com" -OutFile mt4setup.exe
-- ps: set MT_VERSION (Get-Item 'mt4setup.exe').VersionInfo.FileVersion
-- ps: echo "MetaTrader version is $MT_VERSION"
+- ps: set MT_SETUP_VERSION (Get-Item 'mt4setup.exe').VersionInfo.FileVersion
+- ps: echo "MetaTrader setup version is $MT_SETUP_VERSION"
 #- appveyor DownloadFile https://download.sysinternals.com/files/Sigcheck.zip
 #- 7z x Sigcheck.zip
 - AutoHotkey_1.1.30.03_setup.exe /S
@@ -15,6 +15,8 @@ install:
 - ps: type scripts\ahk\install_mt4.ahk
 - ps: C:\Progra~1\AutoHotkey\AutoHotkey.exe /ErrorStdOut scripts\ahk\install_mt4.ahk 2>&1 | more
 - dir "C:\Program Files (x86)"
+- ps: set MT_VERSION (Get-Item 'C\Program Files (x86)\MetaTrader 4\terminal.exe').VersionInfo.FileVersion
+- ps: echo "MetaTrader terminal version is $MT_VERSION"
 - Reg export "HKCU\Software\MetaQuotes Software\MetaTrader 4" "C:\Program Files (x86)\MetaTrader 4\registry.reg"
 - 7z a metatrader4.zip "C:\Program Files (x86)\MetaTrader 4"
 - dir *.zip
