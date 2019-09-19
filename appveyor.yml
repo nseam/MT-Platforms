@@ -26,6 +26,7 @@ install:
 - ps: mv ${MT_ZIP} releases\download
 - git tag ${MT_VERSION}
 - git commit -m "Uploaded new version of MetaTrader: v${MT_VERSION}" releases\download\*
+- git remote -v
 - git push github --tags
 
 #- ps: scoop install ruby python
