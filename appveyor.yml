@@ -27,12 +27,12 @@ install:
 - mkdir releases\download
 - ps: mv ${MT_ZIP} releases\download
 - ps: git config --global credential.helper store
+- ps: git config --global user.email "appveyor@example.com"
+- ps: git config --global user.name "Appveyor"
 - ps: Add-Content "$HOME\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
 - ps: git tag ${MT_VERSION}
 - ps: git add releases\download\*
 - ps: git commit -m "Uploaded new version of MetaTrader - v${MT_VERSION}" releases\download\*
-- ps: git config --global user.email "appveyor@example.com"
-- ps: git config --global user.name "Appveyor"
 - ps: git push origin HEAD --tags
 
 #- ps: scoop install ruby python
