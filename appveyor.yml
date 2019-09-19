@@ -18,8 +18,8 @@ install:
 - ps: set MT_VERSION (Get-Item 'C:\Program Files (x86)\MetaTrader 4\terminal.exe').VersionInfo.FileVersion
 - ps: echo "MetaTrader terminal version is $MT_VERSION"
 - Reg export "HKCU\Software\MetaQuotes Software\MetaTrader 4" "C:\Program Files (x86)\MetaTrader 4\registry.reg"
-- set MT_ZIP=mt-%MT_VERSION%.zip
-- 7z a %MT_ZIP% "C:\Program Files (x86)\MetaTrader 4"
+- ps: set MT_ZIP mt-${MT_VERSION}.zip
+- ps: 7z a ${MT_ZIP} "C:\Program Files (x86)\MetaTrader 4"
 - dir *.zip
 
 #- ps: scoop install ruby python
