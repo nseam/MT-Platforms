@@ -23,7 +23,7 @@ install:
 - ps: set MT_ZIP mt-${MT_VERSION}.zip
 - ps: 7z a ${MT_ZIP} "C:\Program Files (x86)\MetaTrader 4"
 - dir *.zip
-- ps: $env:MT_VERSION=$MT_VERSION
+- ps: $env:MT_VERSION=$MT_VERSION.SubString(0, 1)+".x"
 #before_deploy:
 #- ps: $env:MT_VERSION=$MT_VERSION
 #- ps: scoop install ruby python
