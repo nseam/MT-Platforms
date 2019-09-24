@@ -23,8 +23,6 @@ install:
 - ps: set MT_ZIP mt-${MT_VERSION}.zip
 - ps: 7z a ${MT_ZIP} "C:\Program Files (x86)\MetaTrader 4"
 - dir *.zip
-- mkdir releases
-- mkdir releases\download
 - ps: mv ${MT_ZIP} releases\download
 - ps: git config --global credential.helper store
 - ps: git config --global user.email "appveyor@example.com"
@@ -46,3 +44,11 @@ test_script:
 #- dir "C:\Program Files\MetaTrader"
 build: off
 platform: x86
+deploy:
+  description: 'MetaTrader 4 release'
+  provider: GitHub
+  auth_token:
+    secure: NvSSlnVYkVLxRlzrVct6rWPbW4g9h2NS0O1nc5t+FTHt7c7UI6IyLOj/z2bVzfZ7init
+  artifact: /^mt-.*\.zip$/
+  draft: false
+  prerelease: false
