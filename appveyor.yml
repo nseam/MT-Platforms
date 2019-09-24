@@ -37,6 +37,7 @@ test_script:
 build: off
 platform: x86
 deploy:
+  tag: $(MT_VERSION)
   description: 'MetaTrader 4 release'
   provider: GitHub
   auth_token:
