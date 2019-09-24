@@ -23,7 +23,6 @@ install:
 - ps: set MT_ZIP mt-${MT_VERSION}.zip
 - ps: 7z a ${MT_ZIP} "C:\Program Files (x86)\MetaTrader 4"
 - dir *.zip
-- ps: git tag ${MT_VERSION}
 - ps: $env:MT_VERSION=$MT_VERSION
 #before_deploy:
 #- ps: $env:MT_VERSION=$MT_VERSION
