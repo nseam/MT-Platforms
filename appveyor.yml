@@ -24,7 +24,7 @@ install:
 - ps: 7z a ${MT_ZIP} "C:\Program Files (x86)\MetaTrader 4"
 - dir *.zip
 - ps: git tag ${MT_VERSION}
-
+- ps: $env:MT_VERSION = $(MT_VERSION)
 #- ps: scoop install ruby python
 #- ps: scoop install shellcheck
 before_test:
@@ -41,7 +41,7 @@ deploy:
   description: 'MetaTrader 4 release'
   provider: GitHub
   auth_token:
-    secure: NvSSlnVYkVLxRlzrVct6rWPbW4g9h2NS0O1nc5t+FTHt7c7UI6IyLOj/z2bVzfZ7init
+    secure: P93HFLfhSuHP6BRrieOLEhVSzhWrzvTJ411kd8qfTCKoeR5fVjbaZ43/BBO1efkj
   artifact: /^mt-.*\.zip$/
   draft: false
   prerelease: false
