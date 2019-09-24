@@ -37,12 +37,15 @@ test_script:
 #- dir "C:\Program Files\MetaTrader"
 build: off
 platform: x86
+artifacts:
+- path: 'mt-*.zip'
+  name: zip
 deploy:
   tag: $(MT_VERSION)
   description: 'MetaTrader 4 release'
   provider: GitHub
   auth_token:
     secure: P93HFLfhSuHP6BRrieOLEhVSzhWrzvTJ411kd8qfTCKoeR5fVjbaZ43/BBO1efkj
-  artifact: /mt\-.*\.zip/
+  artifact: zip
   draft: false
   prerelease: false
