@@ -25,8 +25,8 @@ install:
 - ps: set MT_SETUP_VERSION (Get-Item 'mt_setup.exe').VersionInfo.FileVersion
 - AutoHotkey_1.1.30.03_setup.exe /S
 - set "REPODIR=%cd%"
-- ps: type scripts\ahk\install_mt$(env:TARGET_VERSION).ahk
-- ps: C:\Progra~1\AutoHotkey\AutoHotkey.exe /ErrorStdOut scripts\ahk\install_mt$(env:TARGET_VERSION).ahk 2>&1 | more
+- ps: type scripts\ahk\install_mt${env:TARGET_VERSION}.ahk
+- ps: C:\Progra~1\AutoHotkey\AutoHotkey.exe /ErrorStdOut scripts\ahk\install_mt${env:TARGET_VERSION}.ahk 2>&1 | more
 - dir "C:\Program Files (x86)"
 - ps: >-
     If ($env:TARGET_VERSION -eq 4) {
