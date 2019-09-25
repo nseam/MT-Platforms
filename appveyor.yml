@@ -35,7 +35,7 @@ install:
       set MT_VERSION (Get-Item 'C:\Program Files\MetaTrader 5\terminal.exe').VersionInfo.FileVersion
     }
     Else {
-      // We'll never end up here.
+      # We'll never end up here.
     }
 - ps: echo "MetaTrader terminal version is $MT_VERSION"
 - ps: >-
@@ -46,7 +46,7 @@ install:
       Reg export "HKCU\Software\MetaQuotes Software\MetaTrader 5" "C:\Program Files\MetaTrader 5\registry.reg"
     }
     Else {
-      // We'll never end up here.
+      # We'll never end up here.
     }
 - ps: set MT_ZIP mt-${MT_VERSION}.zip
 - ps: >-
@@ -57,7 +57,7 @@ install:
       ps: 7z a ${MT_ZIP} "C:\Program Files\MetaTrader 5"
     }
     Else {
-      // We'll never end up here.
+      # We'll never end up here.
     }
 - dir *.zip
 - ps: $env:MT_VERSION=$MT_VERSION.SubString(0, 1)+".x"
