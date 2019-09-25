@@ -1,27 +1,65 @@
 environment:
-  EAFILE: src/EA31337.mq4
   access_token:
     secure: NvSSlnVYkVLxRlzrVct6rWPbW4g9h2NS0O1nc5t+FTHt7c7UI6IyLOj/z2bVzfZ7init
+  matrix:
+    TARGET_VERSION: 4
+    TARGET_VERSION: 5
 init:
 - ps: iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
 #- ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 install:
 - appveyor DownloadFile https://github.com/Lexikos/AutoHotkey_L/releases/download/v1.1.30.03/AutoHotkey_1.1.30.03_setup.exe
-- ps: wget "https://web.archive.org/web/20160112133258if_/https://download.mql5.com/cdn/web/metaquotes.software.corp/mt4/mt4setup.exe?utm_campaign=www.metatrader4.com" -OutFile mt4setup.exe
-- ps: set MT_SETUP_VERSION (Get-Item 'mt4setup.exe').VersionInfo.FileVersion
-- ps: echo "MetaTrader setup version is $MT_SETUP_VERSION"
-#- appveyor DownloadFile https://download.sysinternals.com/files/Sigcheck.zip
-#- 7z x Sigcheck.zip
+- ps: >-
+    If ($env:version -eq 4) {
+      echo "MetaTrader version 4 selected"
+      wget "https://web.archive.org/web/20160112133258if_/https://download.mql5.com/cdn/web/metaquotes.software.corp/mt4/mt4setup.exe?utm_campaign=www.metatrader4.com" -OutFile mt_setup.exe
+    }
+    ElseIf ($env:version -eq 5) {
+      echo "MetaTrader version 5 selected"
+      wget "https://download.mql5.com/cdn/web/metaquotes.software.corp/mt5/mt5setup.exe" -OutFile mt_setup.exe
+    }
+    Else {
+      echo "Unknown MetaTrader version specified. Note that \"version\" value specified in matrix should be 4 or 5."
+      $host.SetShouldExit(1)
+    }
+- ps: set MT_SETUP_VERSION (Get-Item 'mt_setup.exe').VersionInfo.FileVersion
 - AutoHotkey_1.1.30.03_setup.exe /S
 - set "REPODIR=%cd%"
-- ps: type scripts\ahk\install_mt4.ahk
-- ps: C:\Progra~1\AutoHotkey\AutoHotkey.exe /ErrorStdOut scripts\ahk\install_mt4.ahk 2>&1 | more
+- ps: type scripts\ahk\install_mt$(env:TARGET_VERSION).ahk
+- ps: C:\Progra~1\AutoHotkey\AutoHotkey.exe /ErrorStdOut scripts\ahk\install_mt$(env:TARGET_VERSION).ahk 2>&1 | more
 - dir "C:\Program Files (x86)"
-- ps: set MT_VERSION (Get-Item 'C:\Program Files (x86)\MetaTrader 4\terminal.exe').VersionInfo.FileVersion
+- ps: >-
+    If ($env:version -eq 4) {
+      set MT_VERSION (Get-Item 'C:\Program Files (x86)\MetaTrader 4\terminal.exe').VersionInfo.FileVersion
+    }
+    ElseIf ($env:version -eq 5) {
+      set MT_VERSION (Get-Item 'C:\Program Files\MetaTrader 5\terminal.exe').VersionInfo.FileVersion
+    }
+    Else {
+      // We'll never end up here.
+    }
 - ps: echo "MetaTrader terminal version is $MT_VERSION"
-- Reg export "HKCU\Software\MetaQuotes Software\MetaTrader 4" "C:\Program Files (x86)\MetaTrader 4\registry.reg"
+- ps: >-
+    If ($env:version -eq 4) {
+      Reg export "HKCU\Software\MetaQuotes Software\MetaTrader 4" "C:\Program Files (x86)\MetaTrader 4\registry.reg"
+    }
+    ElseIf ($env:version -eq 5) {
+      Reg export "HKCU\Software\MetaQuotes Software\MetaTrader 5" "C:\Program Files\MetaTrader 5\registry.reg"
+    }
+    Else {
+      // We'll never end up here.
+    }
 - ps: set MT_ZIP mt-${MT_VERSION}.zip
-- ps: 7z a ${MT_ZIP} "C:\Program Files (x86)\MetaTrader 4"
+- ps: >-
+    If ($env:version -eq 4) {
+      ps: 7z a ${MT_ZIP} "C:\Program Files (x86)\MetaTrader 4"
+    }
+    ElseIf ($env:version -eq 5) {
+      ps: 7z a ${MT_ZIP} "C:\Program Files\MetaTrader 5"
+    }
+    Else {
+      // We'll never end up here.
+    }
 - dir *.zip
 - ps: $env:MT_VERSION=$MT_VERSION.SubString(0, 1)+".x"
 #before_deploy:
@@ -42,7 +80,7 @@ artifacts:
   name: zip
 deploy:
   tag: $(MT_VERSION)
-  description: 'MetaTrader 4 release'
+  description: 'MetaTrader package'
   provider: GitHub
   auth_token:
     secure: P93HFLfhSuHP6BRrieOLEhVSzhWrzvTJ411kd8qfTCKoeR5fVjbaZ43/BBO1efkj
