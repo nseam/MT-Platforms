@@ -51,10 +51,10 @@ install:
 - ps: set MT_ZIP mt-${MT_VERSION}.zip
 - ps: >-
     If ($env:TARGET_VERSION -eq 4) {
-      ps: 7z a ${MT_ZIP} "C:\Program Files (x86)\MetaTrader 4"
+      7z a ${MT_ZIP} "C:\Program Files (x86)\MetaTrader 4"
     }
     ElseIf ($env:TARGET_VERSION -eq 5) {
-      ps: 7z a ${MT_ZIP} "C:\Program Files\MetaTrader 5"
+      7z a ${MT_ZIP} "C:\Program Files\MetaTrader 5"
     }
     Else {
       # We'll never end up here.
