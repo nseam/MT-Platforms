@@ -2,9 +2,8 @@ environment:
   access_token:
     secure: NvSSlnVYkVLxRlzrVct6rWPbW4g9h2NS0O1nc5t+FTHt7c7UI6IyLOj/z2bVzfZ7init
   matrix:
-    TARGET_VERSION:
-      - 4
-      - 5
+    - TARGET_VERSION: 4
+    - TARGET_VERSION: 5
 init:
 - ps: iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
 #- ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
