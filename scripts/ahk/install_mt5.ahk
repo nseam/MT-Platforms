@@ -2,7 +2,7 @@
 ; Installs MT4.
 stdout := FileOpen("*", "w")
 stdout.WriteLine("Starting mt4setup.exe...")
-Run, "mt4setup.exe"
+Run, "mt_setup.exe"
 SetTitleMatchMode, RegEx
 WinWait, 4 Setup
 Send, !n

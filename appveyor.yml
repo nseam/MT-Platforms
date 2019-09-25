@@ -1,5 +1,4 @@
 environment:
-  APPVEYOR_RDP_PASSWORD: Test123!
   access_token:
     secure: NvSSlnVYkVLxRlzrVct6rWPbW4g9h2NS0O1nc5t+FTHt7c7UI6IyLOj/z2bVzfZ7init
   matrix:
