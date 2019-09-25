@@ -14,9 +14,6 @@ Sleep, 5000
 WinActivate, 4 Setup
 stdout.WriteLine("Awaiting installer to finish installation...")
 Process, Wait, terminal.exe, 5
-WinWaitActive, ahk_class MetaQuotes::MetaTrader::4.00
-stdout.WriteLine("Closing installer...")
-Send, {Esc}, {Esc}, !fx, !{F4} ; File->Exit, Alt-F4
-WinWaitClose, ahk_exe terminal.exe, 2
 Process, Close, terminal.exe
+WinWaitClose, ahk_exe terminal.exe, 2
 stdout.WriteLine("MT4 installed.")
