@@ -32,7 +32,7 @@ install:
       set MT_VERSION (Get-Item 'C:\Program Files (x86)\MetaTrader 4\terminal.exe').VersionInfo.FileVersion
     }
     ElseIf ($env:TARGET_VERSION -eq 5) {
-      set MT_VERSION (Get-Item 'C:\Program Files\MetaTrader 5\terminal.exe').VersionInfo.FileVersion
+      set MT_VERSION (Get-Item 'C:\Program Files\MetaTrader 5\terminal64.exe').VersionInfo.FileVersion
     }
     Else {
       # We'll never end up here.
