@@ -1,6 +1,4 @@
-# MT-Platforms
-
-Meta Trader 4/5 platform packager.
+# Meta Trader 4/5 platform packager.
 
 ## What it does
 
@@ -43,3 +41,9 @@ Remote Desktop connection details:
   Server: 67.225.165.198:33833
   Username: appveyor
 ```
+
+## Issues
+
+Double check if such issue isn't already opened there: https://github.com/EA31337/MT-Platforms/issues.
+
+If not, please add new issue and describe in details problems you experienced during build.
