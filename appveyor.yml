@@ -71,7 +71,7 @@ deploy:
     # GitHub Personal Access Token (https://github.com/settings/tokens/new).
     # You need at least "public_repo" scope for public repo or "repo" scope for private repos.
     # Copy and paste access token into value encryptor at https://ci.appveyor.com/tools/encrypt and replace following "secure" value with encrypted value.
-    secure: <appveyor-secured-github-token>
+    secure: P93HFLfhSuHP6BRrieOLEhVSzhWrzvTJ411kd8qfTCKoeR5fVjbaZ43/BBO1efkj
   artifact: zip
   draft: false
   prerelease: false
