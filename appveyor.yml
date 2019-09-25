@@ -1,12 +1,9 @@
 environment:
-  access_token:
-    secure: NvSSlnVYkVLxRlzrVct6rWPbW4g9h2NS0O1nc5t+FTHt7c7UI6IyLOj/z2bVzfZ7init
   matrix:
-#    - TARGET_VERSION: 4
+    - TARGET_VERSION: 4
     - TARGET_VERSION: 5
 init:
 - ps: iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
-- ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 install:
 - appveyor DownloadFile https://github.com/Lexikos/AutoHotkey_L/releases/download/v1.1.30.03/AutoHotkey_1.1.30.03_setup.exe
 - ps: >-
@@ -61,17 +58,6 @@ install:
     }
 - dir *.zip
 - ps: $env:MT_VERSION=$MT_VERSION.SubString(0, 1)+".x"
-#before_deploy:
-#- ps: $env:MT_VERSION=$MT_VERSION
-#- ps: scoop install ruby python
-#- ps: scoop install shellcheck
-before_test:
-#- git submodule update --init
-#- shellcheck --version
-#- echo ^#define %MODE% >> src/include/EA31337/ea-mode.mqh
-test_script:
-#- ps: Get-ChildItem -File scripts | Foreach {shellcheck $_.fullname}
-#- dir "C:\Program Files\MetaTrader"
 build: off
 platform: x86
 artifacts:
@@ -82,7 +68,10 @@ deploy:
   description: 'MetaTrader package'
   provider: GitHub
   auth_token:
-    secure: P93HFLfhSuHP6BRrieOLEhVSzhWrzvTJ411kd8qfTCKoeR5fVjbaZ43/BBO1efkj
+    # GitHub Personal Access Token (https://github.com/settings/tokens/new).
+    # You need at least "public_repo" scope for public repo or "repo" scope for private repos.
+    # Copy and paste access token into value encryptor at https://ci.appveyor.com/tools/encrypt and replace following "secure" value with encrypted value.
+    secure: <appveyor-secured-github-token>
   artifact: zip
   draft: false
   prerelease: false
