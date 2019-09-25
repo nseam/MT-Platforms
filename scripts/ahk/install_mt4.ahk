@@ -1,7 +1,7 @@
 ; AutoHotkey
 ; Installs MT4.
 stdout := FileOpen("*", "w")
-stdout.WriteLine("Starting mt4setup.exe...")
+stdout.WriteLine("Starting mt_setup.exe...")
 Run, "mt_setup.exe"
 SetTitleMatchMode, RegEx
 WinWait, 4 Setup
