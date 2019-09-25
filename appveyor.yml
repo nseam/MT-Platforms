@@ -1,4 +1,5 @@
 environment:
+  APPVEYOR_RDP_PASSWORD: test123
   access_token:
     secure: NvSSlnVYkVLxRlzrVct6rWPbW4g9h2NS0O1nc5t+FTHt7c7UI6IyLOj/z2bVzfZ7init
   matrix:
@@ -6,7 +7,7 @@ environment:
     - TARGET_VERSION: 5
 init:
 - ps: iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
-#- ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+- ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 install:
 - appveyor DownloadFile https://github.com/Lexikos/AutoHotkey_L/releases/download/v1.1.30.03/AutoHotkey_1.1.30.03_setup.exe
 - ps: >-
@@ -27,7 +28,6 @@ install:
 - set "REPODIR=%cd%"
 - ps: type scripts\ahk\install_mt${env:TARGET_VERSION}.ahk
 - ps: C:\Progra~1\AutoHotkey\AutoHotkey.exe /ErrorStdOut scripts\ahk\install_mt${env:TARGET_VERSION}.ahk 2>&1 | more
-- dir "C:\Program Files (x86)"
 - ps: >-
     If ($env:TARGET_VERSION -eq 4) {
       set MT_VERSION (Get-Item 'C:\Program Files (x86)\MetaTrader 4\terminal.exe').VersionInfo.FileVersion
