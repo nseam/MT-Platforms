@@ -10,16 +10,16 @@ init:
 install:
 - appveyor DownloadFile https://github.com/Lexikos/AutoHotkey_L/releases/download/v1.1.30.03/AutoHotkey_1.1.30.03_setup.exe
 - ps: >-
-    If ($env:version -eq 4) {
+    If ($env:TARGET_VERSION -eq 4) {
       echo "MetaTrader version 4 selected"
       wget "https://web.archive.org/web/20160112133258if_/https://download.mql5.com/cdn/web/metaquotes.software.corp/mt4/mt4setup.exe?utm_campaign=www.metatrader4.com" -OutFile mt_setup.exe
     }
-    ElseIf ($env:version -eq 5) {
+    ElseIf ($env:TARGET_VERSION -eq 5) {
       echo "MetaTrader version 5 selected"
       wget "https://download.mql5.com/cdn/web/metaquotes.software.corp/mt5/mt5setup.exe" -OutFile mt_setup.exe
     }
     Else {
-      echo "Unknown MetaTrader version specified. Note that \"version\" value specified in matrix should be 4 or 5."
+      echo "Unknown MetaTrader version specified. Note that TARGET_VERSION value specified in matrix should be 4 or 5."
       $host.SetShouldExit(1)
     }
 - ps: set MT_SETUP_VERSION (Get-Item 'mt_setup.exe').VersionInfo.FileVersion
@@ -29,10 +29,10 @@ install:
 - ps: C:\Progra~1\AutoHotkey\AutoHotkey.exe /ErrorStdOut scripts\ahk\install_mt$(env:TARGET_VERSION).ahk 2>&1 | more
 - dir "C:\Program Files (x86)"
 - ps: >-
-    If ($env:version -eq 4) {
+    If ($env:TARGET_VERSION -eq 4) {
       set MT_VERSION (Get-Item 'C:\Program Files (x86)\MetaTrader 4\terminal.exe').VersionInfo.FileVersion
     }
-    ElseIf ($env:version -eq 5) {
+    ElseIf ($env:TARGET_VERSION -eq 5) {
       set MT_VERSION (Get-Item 'C:\Program Files\MetaTrader 5\terminal.exe').VersionInfo.FileVersion
     }
     Else {
@@ -40,10 +40,10 @@ install:
     }
 - ps: echo "MetaTrader terminal version is $MT_VERSION"
 - ps: >-
-    If ($env:version -eq 4) {
+    If ($env:TARGET_VERSION -eq 4) {
       Reg export "HKCU\Software\MetaQuotes Software\MetaTrader 4" "C:\Program Files (x86)\MetaTrader 4\registry.reg"
     }
-    ElseIf ($env:version -eq 5) {
+    ElseIf ($env:TARGET_VERSION -eq 5) {
       Reg export "HKCU\Software\MetaQuotes Software\MetaTrader 5" "C:\Program Files\MetaTrader 5\registry.reg"
     }
     Else {
@@ -51,10 +51,10 @@ install:
     }
 - ps: set MT_ZIP mt-${MT_VERSION}.zip
 - ps: >-
-    If ($env:version -eq 4) {
+    If ($env:TARGET_VERSION -eq 4) {
       ps: 7z a ${MT_ZIP} "C:\Program Files (x86)\MetaTrader 4"
     }
-    ElseIf ($env:version -eq 5) {
+    ElseIf ($env:TARGET_VERSION -eq 5) {
       ps: 7z a ${MT_ZIP} "C:\Program Files\MetaTrader 5"
     }
     Else {
