@@ -27,9 +27,11 @@ install:
 - ps: >-
     If ($env:TARGET_VERSION -eq 4) {
       set MT_VERSION (Get-Item 'C:\Program Files (x86)\MetaTrader 4\terminal.exe').VersionInfo.FileVersion
+      set ME_VERSION (Get-Item 'C:\Program Files (x86)\MetaTrader 4\metaeditor.exe').VersionInfo.FileVersion
     }
     ElseIf ($env:TARGET_VERSION -eq 5) {
       set MT_VERSION (Get-Item 'C:\Program Files\MetaTrader 5\terminal64.exe').VersionInfo.FileVersion
+      set ME_VERSION (Get-Item 'C:\Program Files\MetaTrader 5\metaeditor64.exe').VersionInfo.FileVersion
     }
     Else {
       echo "Error: Unsupported platform version!"
@@ -37,27 +39,28 @@ install:
 - ps: echo "MetaTrader terminal version is $MT_VERSION"
 - ps: >-
     If ($env:TARGET_VERSION -eq 4) {
-      Reg export "HKCU\Software\MetaQuotes Software\MetaTrader 4" "C:\Program Files (x86)\MetaTrader 4\registry.reg"
+      Reg export "HKCU\Software\MetaQuotes Software\MetaTrader 4" "C:\\Program Files (x86)\\MetaTrader 4\\registry.reg"
     }
     ElseIf ($env:TARGET_VERSION -eq 5) {
-      Reg export "HKCU\Software\MetaQuotes Software\MetaTrader 5" "C:\Program Files\MetaTrader 5\registry.reg"
+      Reg export "HKCU\Software\MetaQuotes Software\MetaTrader 5" "C:\\Program Files\\MetaTrader 5\\registry.reg"
     }
     Else {
       echo "Error: Unsupported platform version!"
     }
-- ps: set MT_ZIP mt-${MT_VERSION}.zip
+- ps: set MT_ZIP "mt-${MT_VERSION}.zip"
 - ps: >-
     If ($env:TARGET_VERSION -eq 4) {
-      7z a ${MT_ZIP} "C:\Program Files (x86)\MetaTrader 4"
+      7z a ${MT_ZIP} "C:\\Program Files (x86)\\MetaTrader 4"
     }
     ElseIf ($env:TARGET_VERSION -eq 5) {
-      7z a ${MT_ZIP} "C:\Program Files\MetaTrader 5"
+      7z a ${MT_ZIP} "C:\\Program Files\\MetaTrader 5"
     }
     Else {
       echo "Error: Unsupported platform version!"
     }
 - dir *.zip
 - ps: $env:MT_VERSION=$MT_VERSION
+- ps: $env:ME_VERSION=$ME_VERSION
 on_failure:
 - ps: echo "Failed to install MetaTrader Setup $MT_SETUP_VERSION!"
 build: off
@@ -72,7 +75,7 @@ deploy:
     # You need at least "public_repo" scope for public repo or "repo" scope for private repos.
     # Copy and paste access token into value encryptor at https://ci.appveyor.com/tools/encrypt and replace following "secure" value with encrypted value.
     secure: CfvlXEnsZxBCuJ1p850Q8mIju3dWBj/6dlL13JC4z0aLCPcJCeozbiu/FrbCnZUq
-  description: "MetaTrader $(MT_VERSION)"
+  description: "MetaTrader v$(MT_VERSION) & MetaEditor v$(ME_VERSION)"
   draft: false
   force_update: false
   prerelease: false
