@@ -5,22 +5,22 @@ environment:
 init:
 - ps: iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
 install:
-- appveyor DownloadFile https://github.com/Lexikos/AutoHotkey_L/releases/download/v1.1.30.03/AutoHotkey_1.1.30.03_setup.exe
+- appveyor DownloadFile https://github.com/Lexikos/AutoHotkey_L/releases/download/v1.1.30.03/AutoHotkey_1.1.30.03_setup.exe -FileName AHK_setup.exe
 - ps: >-
     If ($env:TARGET_VERSION -eq 4) {
-      echo "MetaTrader version 4 selected"
+      echo "Downloading MetaTrader 4..."
       wget "https://web.archive.org/web/20160112133258if_/https://download.mql5.com/cdn/web/metaquotes.software.corp/mt4/mt4setup.exe?utm_campaign=www.metatrader4.com" -OutFile mt_setup.exe
     }
     ElseIf ($env:TARGET_VERSION -eq 5) {
-      echo "MetaTrader version 5 selected"
+      echo "Downloading MetaTrader 5..."
       wget "https://download.mql5.com/cdn/web/metaquotes.software.corp/mt5/mt5setup.exe" -OutFile mt_setup.exe
     }
     Else {
-      echo "Unknown MetaTrader version specified. Note that TARGET_VERSION value specified in matrix should be 4 or 5."
+      echo "Unknown MetaTrader version specified. The TARGET_VERSION value in matrix needs to be 4 or 5."
       $host.SetShouldExit(1)
     }
 - ps: set MT_SETUP_VERSION (Get-Item 'mt_setup.exe').VersionInfo.FileVersion
-- AutoHotkey_1.1.30.03_setup.exe /S
+- AHK_setup.exe /S
 - set "REPODIR=%cd%"
 - ps: type scripts\ahk\install_mt${env:TARGET_VERSION}.ahk
 - ps: C:\Progra~1\AutoHotkey\AutoHotkey.exe /ErrorStdOut scripts\ahk\install_mt${env:TARGET_VERSION}.ahk 2>&1 | more
@@ -32,7 +32,7 @@ install:
       set MT_VERSION (Get-Item 'C:\Program Files\MetaTrader 5\terminal64.exe').VersionInfo.FileVersion
     }
     Else {
-      # We'll never end up here.
+      echo "Error: Unsupported platform version!"
     }
 - ps: echo "MetaTrader terminal version is $MT_VERSION"
 - ps: >-
@@ -43,7 +43,7 @@ install:
       Reg export "HKCU\Software\MetaQuotes Software\MetaTrader 5" "C:\Program Files\MetaTrader 5\registry.reg"
     }
     Else {
-      # We'll never end up here.
+      echo "Error: Unsupported platform version!"
     }
 - ps: set MT_ZIP mt-${MT_VERSION}.zip
 - ps: >-
@@ -54,10 +54,12 @@ install:
       7z a ${MT_ZIP} "C:\Program Files\MetaTrader 5"
     }
     Else {
-      # We'll never end up here.
+      echo "Error: Unsupported platform version!"
     }
 - dir *.zip
-- ps: $env:MT_VERSION=$MT_VERSION.SubString(0, 1)+".x"
+- ps: $env:MT_VERSION=$MT_VERSION
+on_failure:
+- ps: echo "Failed to install MetaTrader Setup $MT_SETUP_VERSION!"
 build: off
 platform: x86
 artifacts:
@@ -70,7 +72,7 @@ deploy:
     # You need at least "public_repo" scope for public repo or "repo" scope for private repos.
     # Copy and paste access token into value encryptor at https://ci.appveyor.com/tools/encrypt and replace following "secure" value with encrypted value.
     secure: CfvlXEnsZxBCuJ1p850Q8mIju3dWBj/6dlL13JC4z0aLCPcJCeozbiu/FrbCnZUq
-  description: 'MetaTrader package'
+  description: "MetaTrader $(MT_VERSION)"
   draft: false
   force_update: false
   prerelease: false
