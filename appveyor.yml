@@ -64,15 +64,15 @@ artifacts:
 - path: 'mt-*.zip'
   name: zip
 deploy:
-  tag: $(MT_VERSION)
-  description: 'MetaTrader package'
-  provider: GitHub
+  artifact: zip
   auth_token:
     # GitHub Personal Access Token (https://github.com/settings/tokens/new).
     # You need at least "public_repo" scope for public repo or "repo" scope for private repos.
     # Copy and paste access token into value encryptor at https://ci.appveyor.com/tools/encrypt and replace following "secure" value with encrypted value.
-    secure: P93HFLfhSuHP6BRrieOLEhVSzhWrzvTJ411kd8qfTCKoeR5fVjbaZ43/BBO1efkj
-  artifact: zip
+    secure: CfvlXEnsZxBCuJ1p850Q8mIju3dWBj/6dlL13JC4z0aLCPcJCeozbiu/FrbCnZUq
+  description: 'MetaTrader package'
   draft: false
-  prerelease: false
   force_update: false
+  prerelease: false
+  provider: GitHub
+  tag: $(MT_VERSION)
