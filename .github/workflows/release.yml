@@ -1,0 +1,23 @@
+---
+name: Release
+
+on:
+  - pull_request
+  - push
+jobs:
+  ReleaseMT4:
+    runs-on: windows-2019
+    env:
+      TARGET_VERSION: 4
+    steps:
+      - uses: actions/checkout@v2
+      - run: ./.github/workflows/release.ps1
+        shell: powershell
+  ReleaseMT5:
+    runs-on: windows-2019
+    env:
+      TARGET_VERSION: 5
+    steps:
+      - uses: actions/checkout@v2
+      - run: ./.github/workflows/release.ps1
+        shell: powershell
